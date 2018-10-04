@@ -1,6 +1,15 @@
 import psycopg2
 
 
+def get_top_three_articles ():
+    pass
+
+def get_authors_rank ():
+    pass
+
+def get_high_request_error_days ():
+    pass
+
 
 
 def _show_results (description, results):
