@@ -4,7 +4,15 @@ import psycopg2
 show most popular three articles of all time
 '''
 def get_top_three_articles ():
-    pass
+    db = psycopg2.connect("dbname=news")
+    cursor = db.cursor()
+    cursor.execute("select title, views from articles, \
+                    (select path, count(*) as views from log group by path order by views desc) as rank \
+                    where path like '%' || slug")
+    results = cursor.fetchall()
+    print(cursor.description)
+    db.close()
+    _show_results(cursor.description, results)
 
 '''
 show most popular article authors of all time
@@ -41,3 +49,6 @@ def _show_results (description, results):
     for row in results:
         print(tavnit % row)
     print(separator)
+
+if __name__ == '__main__':
+    get_top_three_articles()
