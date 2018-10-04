@@ -1,12 +1,21 @@
 import psycopg2
 
-
+'''
+show most popular three articles of all time
+'''
 def get_top_three_articles ():
     pass
 
+'''
+show most popular article authors of all time
+'''
 def get_authors_rank ():
     pass
 
+
+'''
+show days that more than 1% requests lead to errors
+'''
 def get_high_request_error_days ():
     pass
 
