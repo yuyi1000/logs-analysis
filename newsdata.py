@@ -35,8 +35,9 @@ def _show_results (description, results):
     tavnit = '|'
     separator = '+'
 
-    for cd in description:
-        widths.append(max(cd[2], len(cd[0])))
+    for index, cd in enumerate(description):
+        # widths.append(max(cd[2], len(cd[0])))
+        widths.append(max(max([len(str(result[index])) for result in results]), len(cd[0])))
         columns.append(cd[0])
 
     for w in widths:
