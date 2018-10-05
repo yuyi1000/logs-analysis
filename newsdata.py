@@ -10,7 +10,6 @@ def get_top_three_articles ():
                     (select path, count(*) as views from log group by path order by views desc) as rank \
                     where path like '%' || slug")
     results = cursor.fetchall()
-    print(cursor.description)
     db.close()
     _show_results(cursor.description, results)
 
