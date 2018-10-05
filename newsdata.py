@@ -31,8 +31,16 @@ def get_authors_rank ():
 show days that more than 1% requests lead to errors
 '''
 def get_high_request_error_days ():
-    pass
-
+    db = psycopg2.connect("dbname=news")
+    cursor = db.cursor()
+    cursor.execute("select total.time, error.count / total.count::real as error_rate \
+                    from (select time::date, count(*) from log group by time::date) as total, \
+                    (select time::date,  count(*) from log where status = '404 NOT FOUND' \
+                    group by time::date order by time::date) as error \
+                    where total.time = error.time and error.count / total.count::real > 0.01")
+    results = cursor.fetchall()
+    db.close()
+    _show_results(cursor.description, results)
 
 
 def _show_results (description, results):
@@ -60,3 +68,4 @@ def _show_results (description, results):
 if __name__ == '__main__':
     get_top_three_articles()
     get_authors_rank()
+    get_high_request_error_days()
