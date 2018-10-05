@@ -1,7 +1,7 @@
 import psycopg2
 
 '''
-show most popular three articles of all time
+show popular articles of all time according to their view times
 '''
 def get_top_three_articles ():
     db = psycopg2.connect("dbname=news")
