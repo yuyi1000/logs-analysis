@@ -17,7 +17,14 @@ def get_top_three_articles ():
 show most popular article authors of all time
 '''
 def get_authors_rank ():
-    pass
+    db = psycopg2.connect("dbname=news")
+    cursor = db.cursor()
+    cursor.execute("select name, sum(count) as views from articles, authors, \
+                    (select path, count(*) from log group by path order by count desc) as rank \
+                    where path like '%' || slug and authors.id = author group by authors.id")
+    results = cursor.fetchall()
+    db.close()
+    _show_results(cursor.description, results)
 
 
 '''
@@ -52,3 +59,4 @@ def _show_results (description, results):
 
 if __name__ == '__main__':
     get_top_three_articles()
+    get_authors_rank()
