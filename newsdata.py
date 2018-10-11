@@ -45,7 +45,8 @@ show days that more than 1% requests lead to errors
 def get_high_request_error_days():
     db = psycopg2.connect("dbname=news")
     cursor = db.cursor()
-    cursor.execute("select total.time, error.count / total.count::real \
+    cursor.execute("select total.time, round(error.count / \
+                    total.count::numeric, 4) \
                     as error_rate from (select time::date, count(*) from log \
                     group by time::date) as total, \
                     (select time::date,  count(*) from log \
