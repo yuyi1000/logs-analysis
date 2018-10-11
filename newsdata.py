@@ -55,8 +55,11 @@ def get_high_request_error_days():
                     where total.time = error.time \
                     and error.count / total.count::real > 0.01")
     results = cursor.fetchall()
+    percentage_results = []
+    for row in results:
+        percentage_results.append((row[0], "{0:.2%}".format(row[1])))
     db.close()
-    _show_results(cursor.description, results)
+    _show_results(cursor.description, percentage_results)
 
 
 def _show_results(description, results):
